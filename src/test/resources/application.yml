@@ -1,0 +1,15 @@
+
+spring:
+  config:
+    activate:
+      on-profile: local
+    import: classpath:/application-local.yml
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+    import: file:/app/config/jpa-board-config/application-prod.yml
+
+
+
