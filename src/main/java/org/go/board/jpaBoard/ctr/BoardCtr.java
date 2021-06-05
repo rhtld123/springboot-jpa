@@ -6,7 +6,9 @@ import org.go.board.jpaBoard.vo.BoardDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +24,11 @@ public class BoardCtr {
 
     @GetMapping("/board")
     public ResponseEntity<Page<BoardDTO>> getAllBoardList(Pageable pageable) throws Exception {
-        Page<BoardDTO> boardList = boardService.getAllBoardList(pageable);
+        Page<BoardDTO> boardList = boardService.getAllBoardList(
+                PageRequest.of(pageable.getPageNumber(),
+                               pageable.getPageSize(),
+                               Sort.by("id").descending()
+                        ));
         return new ResponseEntity<Page<BoardDTO>>(boardList, HttpStatus.OK);
     }
 

@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.go.board.jpaReply.svc.ReplyService;
 import org.go.board.jpaReply.vo.ReplyDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +20,10 @@ public class ReplyCtr {
 
     @GetMapping("/reply/{bid}")
     public ResponseEntity<Page<ReplyDTO>> getBoardReply(@PathVariable("bid") Long bid, Pageable pageable) throws Exception {
-        Page<ReplyDTO> result = replyService.getAllReplyList(bid, pageable);
+        Page<ReplyDTO> result = replyService.getAllReplyList(bid,
+                PageRequest.of(pageable.getPageNumber(),
+                               pageable.getPageSize(),
+                               Sort.by("id").descending()));
         return new ResponseEntity<Page<ReplyDTO>>(result, HttpStatus.OK);
     }
 
