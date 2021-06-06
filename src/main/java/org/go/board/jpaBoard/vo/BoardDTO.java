@@ -13,10 +13,10 @@ public class BoardDTO {
     private String title;
     private String content;
     private String writer;
-    private LocalDateTime regDate;
+    private String regDate;
     private Long viewcnt;
     @Builder
-    public BoardDTO(Long id,String title, String content, String writer, LocalDateTime regDate, Long viewcnt) {
+    public BoardDTO(Long id,String title, String content, String writer, String regDate, Long viewcnt) {
         this.id = id;
         this.title = title;
         this.content = content;

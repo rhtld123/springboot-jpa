@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +26,7 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public Page<BoardDTO> getAllBoardList(Pageable pageable) throws Exception {
         Page<Board> boards = boardRepository.findAll(pageable);
-        Page<BoardDTO> result = boards.map(board -> new BoardDTO(board.getId(),board.getTitle(),board.getContent(),board.getWriter(),board.getRegDate(),board.getViewcnt()));
+        Page<BoardDTO> result = boards.map(board -> new BoardDTO(board.getId(),board.getTitle(),board.getContent(),board.getWriter(),board.getRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")),board.getViewcnt()));
         return result;
     }
 
@@ -39,7 +40,7 @@ public class BoardServiceImpl implements BoardService{
                 .title(board.getTitle())
                 .content(board.getContent())
                 .writer(board.getWriter())
-                .regDate(board.getRegDate())
+                .regDate(board.getRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm")))
                 .viewcnt(board.getViewcnt())
                 .build();
     }
